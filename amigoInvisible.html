@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Misterio del Amigo Invisible</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Caveat:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+        padding: 15px;
+        color: #333;
+        overflow-x: hidden;
+        touch-action: manipulation;
+      }
+
+      html {
+        height: -webkit-fill-available;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        padding: 30px 20px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin: auto;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(to right, #e84393, #6c5ce7, #00cec9);
+        border-radius: 10px 10px 0 0;
+      }
+
+      .header {
+        margin-bottom: 25px;
+      }
+
+      h2 {
+        font-family: "Caveat", cursive;
+        font-size: 1.9rem;
+        color: #2d3436;
+        margin-bottom: 15px;
+        line-height: 1.35;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      h4 {
+        font-weight: 500;
+        font-size: 1.2rem;
+        color: #e84393;
+        margin-bottom: 25px;
+        position: relative;
+        display: inline-block;
+        padding: 0 10px;
+      }
+
+      h4::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(to right, #e84393, #6c5ce7);
+        border-radius: 3px;
+      }
+
+      .input-group {
+        margin: 20px 0;
+        position: relative;
+      }
+
+      input {
+        padding: 16px 20px;
+        width: 100%;
+        border: 2px solid #dfe6e9;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        text-align: center;
+        outline: none;
+        transition: all 0.4s;
+        font-family: "Poppins", sans-serif;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      input:focus {
+        border-color: #6c5ce7;
+        box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2),
+          inset 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      input::placeholder {
+        color: #b2bec3;
+        font-style: italic;
+      }
+
+      button {
+        background: linear-gradient(to right, #e84393, #6c5ce7);
+        color: white;
+        border: none;
+        padding: 16px 45px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+        font-family: "Poppins", sans-serif;
+        letter-spacing: 0.5px;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        width: 100%;
+        max-width: 300px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 10px rgba(108, 92, 231, 0.3);
+      }
+
+      .lock-icon {
+        margin-right: 8px;
+        transition: transform 0.3s;
+      }
+
+      button:active .lock-icon {
+        transform: translateY(2px);
+      }
+
+      .message {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 15px;
+        display: none;
+        animation: fadeIn 0.7s ease-out;
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: left;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid;
+      }
+
+      .correct {
+        background: rgba(46, 213, 115, 0.1);
+        color: #006266;
+        border-color: #00b894;
+      }
+
+      .incorrect {
+        background: rgba(255, 107, 107, 0.1);
+        color: #b71540;
+        border-color: #ff7675;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .footer {
+        margin-top: 25px;
+        color: #636e72;
+        font-size: 0.85rem;
+        font-style: italic;
+        padding: 0 10px;
+      }
+
+      .secret-icon {
+        font-size: 3rem;
+        color: #e84393;
+        margin-bottom: 15px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Optimizaciones específicas para móviles */
+      @media (max-width: 480px) {
+        .container {
+          padding: 25px 15px;
+          border-radius: 18px;
+        }
+
+        h2 {
+          font-size: 1.7rem;
+          margin-bottom: 12px;
+        }
+
+        h4 {
+          font-size: 1.1rem;
+          margin-bottom: 20px;
+        }
+
+        input {
+          padding: 14px 18px;
+          font-size: 1rem;
+        }
+
+        button {
+          padding: 15px 25px;
+          font-size: 1.1rem;
+          max-width: 100%;
+        }
+
+        .message {
+          padding: 18px 15px;
+          font-size: 0.95rem;
+          margin-top: 20px;
+        }
+
+        .secret-icon {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 350px) {
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        h4 {
+          font-size: 1rem;
+        }
+
+        input {
+          padding: 12px 15px;
+          font-size: 0.95rem;
+        }
+
+        button {
+          padding: 14px 20px;
+          font-size: 1rem;
+        }
+
+        .message {
+          font-size: 0.9rem;
+        }
+      }
+
+      /* Soporte para modo oscuro */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: linear-gradient(135deg, #0d1b3a, #561212, #0d1b3a);
+        }
+
+        .container {
+          background: rgba(30, 30, 40, 0.95);
+          color: #f0f0f0;
+        }
+
+        h2 {
+          color: #f8f8f8;
+        }
+
+        input {
+          background-color: #2a2a3a;
+          border-color: #444;
+          color: #f0f0f0;
+        }
+
+        input::placeholder {
+          color: #999;
+        }
+
+        .correct {
+          background: rgba(0, 100, 80, 0.25);
+          color: #b8f8e0;
+        }
+
+        .incorrect {
+          background: rgba(120, 0, 20, 0.25);
+          color: #ffb8c0;
+        }
+
+        .footer {
+          color: #aaa;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="secret-icon">
+          <i class="fas fa-user-secret"></i>
+        </div>
+        <h2>
+          Un amigo fiel es un refugio seguro, el que lo encuentra ha encontrado
+          un tesoro. 🕵️
+        </h2>
+      </div>
+
+      <h4>Ingresa tu nombre para saber si sos mi amigo invisible</h4>
+
+      <div class="input-group">
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Escribe tu nombre aquí"
+          autocomplete="off"
+          autocapitalize="words"
+          enterkeyhint="go"
+        />
+      </div>
+
+      <button onclick="checkName()">
+        <i class="fas fa-lock lock-icon"></i> ¡Desbloquear contenido!
+      </button>
+
+      <div id="message" class="message"></div>
+
+      <div class="footer">Confidencial • Solo para el destinatario</div>
+    </div>
+
+    <script>
+      // Configuración personalizada
+      const CONFIG = {
+        nombreCorrecto: "Joel mirandai", // Nombre real del destinatario
+        mensajeSecreto: `
+                <p><strong>🎉 ¡Hola amigo invisible!</strong></p>
+                <p>Qué alegría que hayas llegado hasta acá. Antes de continuar, te menciono que esta es una página web confidencial donde sos la única persona en el mundo que tiene acceso. Está protegida con un sistema de encriptación avanzado.</p>
+                <p class="tip">💡 En estos días te seguiré dando pistas para que puedas descubrir quién soy, pero te pido paciencia:</p>
+                <ul>
+                    <li>No intentes buscarme</li>
+                    <li>No preguntes a otros</li>
+                    <li>Seguí mis indicaciones solamente</li>
+                </ul>
+                <p>Soy alguien fuera de tu círculo habitual en la PUR. Te contactaré nuevamente pronto con más señales.</p>
+                <p class="final">Mantené este secreto y disfrutá de la aventura...</p>
+            `,
+        mensajeError: `
+                <div class="error-header">
+                    <i class="fas fa-ban"></i> 404 - Acceso denegado
+                </div>
+                <p>No sos mi amigo invisible. Seguí rezando por tu amigo y la PUR 🙏</p>
+            `,
+      };
+
+      function checkName() {
+        const input = document.getElementById("nameInput").value.trim();
+        const messageDiv = document.getElementById("message");
+
+        // Normalizar nombres para comparación flexible
+        const normalize = (str) =>
+          str.toLowerCase().replace(/\s+/g, " ").trim();
+
+        if (normalize(input) === normalize(CONFIG.nombreCorrecto)) {
+          messageDiv.className = "message correct";
+          messageDiv.innerHTML = CONFIG.mensajeSecreto;
+        } else {
+          messageDiv.className = "message incorrect";
+          messageDiv.innerHTML = CONFIG.mensajeError;
+        }
+
+        messageDiv.style.display = "block";
+
+        // Desplazar suavemente al mensaje
+        messageDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Vibrar en caso de error (solo en móviles)
+        if (
+          normalize(input) !== normalize(CONFIG.nombreCorrecto) &&
+          "vibrate" in navigator
+        ) {
+          navigator.vibrate(200);
+        }
+      }
+
+      // Permitir enviar con Enter
+      document
+        .getElementById("nameInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") checkName();
+        });
+
+      // Enfocar automáticamente el campo de entrada en móviles
+      window.addEventListener("load", function () {
+        document.getElementById("nameInput").focus();
+      });
+    </script>
+  </body>
+</html>
