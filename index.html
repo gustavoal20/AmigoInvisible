@@ -18,6 +18,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
+      /* --- TU CSS ORIGINAL EMPIEZA AQUÍ --- */
       * {
         margin: 0;
         padding: 0;
@@ -346,6 +347,75 @@
           color: #aaa;
         }
       }
+      /* --- TU CSS ORIGINAL TERMINA AQUÍ --- */
+
+      /* --- NUEVOS ESTILOS PARA SANTA TERESA --- */
+      .santateresa-section {
+        display: none;
+        margin-top: 35px;
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .santateresa-section.visible {
+        display: block;
+      }
+
+      .santateresa-section img {
+        max-width: 80%; /* La imagen ocupará hasta el 80% del ancho de su contenedor */
+        height: auto; /* Mantiene la proporción de la imagen */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        border: 3px solid #e84393;
+      }
+
+      .santateresa-section h5 {
+        font-family: "Caveat", cursive;
+        font-size: 1.8rem;
+        color: #e84393;
+        margin-bottom: 10px;
+      }
+
+      .santateresa-section p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #4a4a4a;
+        padding: 0 15px;
+      }
+
+      /* --- AÑADE ESTOS ESTILOS PARA MODO OSCURO --- */
+      @media (prefers-color-scheme: dark) {
+        .santateresa-section p {
+          color: #ccc;
+        }
+        .santateresa-section img {
+          border-color: #e84393;
+        }
+      }
+
+      .next-step-link {
+        margin-top: 30px;
+      }
+
+      .next-button {
+        background: linear-gradient(to right, #6c5ce7, #00cec9);
+        color: white;
+        border: none;
+        padding: 16px 45px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+      }
+
+      .next-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 20px rgba(108, 92, 231, 0.4);
+      }
     </style>
   </head>
   <body>
@@ -366,7 +436,7 @@
         <input
           type="text"
           id="nameInput"
-          placeholder="Nombre y apellido..."
+          placeholder="Escribe tu nombre aquí"
           autocomplete="off"
           autocapitalize="words"
           enterkeyhint="go"
@@ -378,6 +448,46 @@
       </button>
 
       <div id="message" class="message"></div>
+
+      <div id="santaTeresaSection" class="santateresa-section">
+        <p>
+          ¡Hola, mi amigo invisible! Espero que te encuentres muy bien
+          disfrutando de la convivencia.
+          <strong
+            >Te cuento que estuve con una amiga tuya, Santa Teresa de
+            Jesús.</strong
+          >
+          Te dejo una foto de ella, nos va a acompañar en estos días.
+        </p>
+        <img src="santaTeresa.jpg" alt="Santa Teresa de Jesús" />
+        <p>
+          Yo no la conozco mucho, pero estuve leyendo un poco de su vida en
+          estos días. Me enteré que es Doctora de la Iglesia, fue una mística
+          excepcional y también una profunda teóloga que supo plasmar en
+          palabras la experiencia de la oración y la unión con Dios.
+        </p>
+        <p>
+          Su vida y obra son un testimonio vivo de cómo la fe y la razón pueden
+          ir de la mano. A través de sus escritos, como "El Castillo Interior" o
+          "Libro de la Vida", ella explora, de manera práctica y profunda, el
+          camino del alma hacia Dios. Una verdadera ciencia sagrada al servicio
+          del amor.
+        </p>
+        <p>
+          Te invito a que, en estos días, pienses en ella. Ella nos acompañará y
+          te dará las claves para descubrir mi identidad. Te dejo un crucigrama
+          con algunas palabras relacionadas a ella, hay una palabra clave que te
+          dará la pista del área a la que pertenezco. Cuando lo hayas terminado,
+          decile a Ani cuál es la palabra y el área que crees.
+        </p>
+        <div class="next-step-link">
+          <a
+            href="https://puzzel.org/es/crossword/play?p=-OWet48SkWf79L4c3oPM"
+            class="next-button"
+            >Ir al Desafío</a
+          >
+        </div>
+      </div>
 
       <div class="footer">Confidencial • Solo para el destinatario</div>
     </div>
@@ -396,7 +506,7 @@
                     <li>Seguí mis indicaciones solamente</li>
                 </ul>
                 <p>Soy alguien fuera de tu círculo habitual en la PUR. Te contactaré nuevamente pronto con más señales.</p>
-                 <p>Para saber que pudiste ingresar y ver este mensaje, reacciona con el stickers que más te guste a el mensaje que mandaron con el link a el grupo de Discord Pureño.</p>
+                <p>Para saber que pudiste ingresar y ver este mensaje, reacciona con el stickers que más te guste a el mensaje que mandaron con el link a el grupo de Discord Pureño.</p>
                 <p class="final">Mantené este secreto y disfrutá de la aventura...</p>
             `,
         mensajeError: `
@@ -410,6 +520,8 @@
       function checkName() {
         const input = document.getElementById("nameInput").value.trim();
         const messageDiv = document.getElementById("message");
+        const santaTeresaSection =
+          document.getElementById("santaTeresaSection"); // Obtener la nueva sección
 
         // Normalizar nombres para comparación flexible
         const normalize = (str) =>
@@ -418,9 +530,11 @@
         if (normalize(input) === normalize(CONFIG.nombreCorrecto)) {
           messageDiv.className = "message correct";
           messageDiv.innerHTML = CONFIG.mensajeSecreto;
+          santaTeresaSection.classList.add("visible"); // Mostrar la nueva sección
         } else {
           messageDiv.className = "message incorrect";
           messageDiv.innerHTML = CONFIG.mensajeError;
+          santaTeresaSection.classList.remove("visible"); // Asegurar que esté oculta
         }
 
         messageDiv.style.display = "block";
@@ -451,3 +565,4 @@
     </script>
   </body>
 </html>
+
